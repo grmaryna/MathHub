@@ -32,12 +32,12 @@
 - `schedule`: string
 - `price`: number
 - `teacher_id`: int (FK)
-- `is_active`: string
+- `is_active`: boolean
 
 ### Lesson
 - `lesson_id`: int (PK)
 - `course_id`: int (FK)
-- `scheduled_at` datetime
+- `scheduled_at`: datetime
 - `link`: string
 - `recording_url`: string
 
@@ -73,7 +73,7 @@
 
 |      Звʼязок     | Кардинальність |  Пояснення  |
 | ---------------- | -------------- | ----------- |
-| Parent - Student | 1 - 0..1      | Опікун може мати кількох дітей, одна дитина має одного опікуна |
+| Parent - Student | 0..1 - N      | Опікун може мати кількох дітей, одна дитина має одного опікуна |
 | Teacher - Course | 1 - N | Викладач може вести кілька курсів, курс може мати одного викладача |
 | Course - Lesson | 1 - N | Курс складається із кількох занять, заняття може належати одному курсу |
 | Lesson - Homework| 1 - 0..1 | На одному занятті можуть можуть задати одне домашнє завдання |
