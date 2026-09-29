@@ -1,70 +1,72 @@
 ## Сутності та атрибути
 
 ### Parent 
-- `parent_id` 
-- `first_name`
-- `second_name`
-- `email`
-- `phone_number`
+- `parent_id`: int (PK)
+- `first_name`: string
+- `second_name`: string
+- `email`: string
+- `phone_number`: string
 
 ### Student
-- `student_id`
-- `first_name`
-- `second_name`
-- `birth_date`
-- `grade_level`
-- `email`
-- `phone_number`
-- `parent_id`
+- `student_id`: int (PK)
+- `first_name`: string
+- `second_name`: string
+- `birth_date`: date
+- `grade_level`: int
+- `email`: string
+- `phone_number`: string
+- `parent_id`: int (FK)
 
 ### Teacher
-- `teacher_id`
-- `first_name`
-- `second_name`
-- `email`
-- `specialization`
+- `teacher_id`: int (PK)
+- `first_name`: string
+- `second_name`: string
+- `email`: string
+- `specialization`: string
 
 ### Course
-- `course_id`
-- `title`
-- `level`
-- `description`
-- `schedule`
-- `price`
-- `teacher_id`
+- `course_id`: int (PK)
+- `title`: string
+- `level`: string
+- `description`: string
+- `schedule`: string
+- `price`: number
+- `teacher_id`: int (FK)
 
 ### Lesson
-- `lesson_id`
-- `course_id`
-- `schedule`
-- `link`
-- `recording_url`
+- `lesson_id`: int (PK)
+- `course_id`: int (FK)
+- `schedule` datetime
+- `link`: string
+- `recording_url`: string
 
 ### Homework
-- `homework_id`
-- `lesson_id`
-- `title`
-- `description`
-- `due_date`
-
+- `homework_id`: int (PK)
+- `lesson_id`: int (FK)
+- `title`: string
+- `description`: string
+- `due_date`: date
+- `attachment_url`: string
 
 ### Homework_submission
-- `homework_submission_id`
-- `student_id`
-- `homework_id`
-- `submitted_at`
-- `grade`
-- `feedback`
-- `status`
+- `homework_submission_id`: int (PK)
+- `student_id`: int (FK)
+- `homework_id`: int (FK)
+- `submitted_at`: datetime
+- `file_url`: string
+- `grade`: number
+- `feedback`: string
+- `status`: string
+- `graded_at`: datetime
 
 ### Subscription
-- `subscription_id`
-- `student_id`
-- `course_id`
-- `start_date`
-- `end_date`
-- `payment_method`
-- `price`
+- `subscription_id`: int (PK)
+- `student_id`: int (FK)
+- `course_id`: int (FK)
+- `start_date`: date
+- `end_date`: date
+- `payment_method`: string
+- `price`: number
 
 ## Зв'язки
 
@@ -108,16 +110,18 @@
 
 ### 4. Домашні завдання
 
-- коли викладач створює домашнє завдання з назвою, описом і терміном здачі, система повинна прив'язати його до заняття й повідомити учнів курсу.
-- коли учень із активною підпискою надсилає виконане завдання до `due_date`, система повинна зберегти роботу з `submitted_at` і статусом «submitted».
-- якщо учень надсилає роботу після `due_date`, тоді система повинна прийняти її зі статусом «late».
-- система повинна підтримувати такі типи запитань: одна правильна відповідь, кілька правильних відповідей, числова відповідь.
-- якщо в запитанні не вказано правильну відповідь або кількість балів, тоді система повинна відхилити збереження тесту.
-- якщо учень без активної підписки на курс намагається розпочати тест, тоді система повинна відмовити в доступі.
-- коли система автоматично оцінила роботу, вона повинна зберегти `score` і `grade` та повідомити учня й опікуна про результат.
-- де викладач додає коментар до роботи, система повинна зберегти його в `feedback` і показати учню.
-- коли спробу завершено, система повинна показати учню, які відповіді були правильними, а які ні.
-- система повинна показувати викладачу результати учнів його курсів і статистику по запитаннях (відсоток правильних відповідей).
+- коли викладач створює домашнє завдання до заняття свого курсу, система повинна вимагати `title`, `description` і `due_date`.
+- cистема повинна дозволяти опційно додати `attachment_url` (посилання на тест чи матеріал на зовнішній платформі).
+- якщо обов'язкові поля не заповнені, тоді система повинна відхилити збереження та вказати, які поля некоректні.
+- коли викладач зберігає домашнє завдання, система повинна повідомити учнів курсу з активною підпискою про нове завдання.
+- коли учень з активною підпискою натискає «Здати» до `due_date` (з прикріпленим файлом або без нього), система повинна створити здачу з `submitted_at` і статусом submitted.
+- якщо учень додав файл, тоді система повинна зберегти його в `file_url`.
+- якщо учень натискає «Здати» після `due_date`, тоді система повинна прийняти роботу зі статусом late.
+- cистема повинна показувати викладачу список зданих і ще не перевірених робіт по кожному з його курсів.
+- коли викладач переглядає здану роботу, система повинна показати прикріплений файл, якщо він є.
+- коли викладач виставляє `grade` (у межах 1–100) і за бажанням пише `feedback`, система повинна зберегти їх, записати graded_at і змінити статус на graded.
+- коли роботу оцінено, система повинна повідомити учня й опікуна про результат.
+- коли робота має статус graded, система повинна показувати учню `grade` і `feedback`.
 
 ### 5. Підписки та оплата
 
