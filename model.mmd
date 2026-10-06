@@ -14,6 +14,7 @@ erDiagram
         string second_name
         string email
         string phone_number
+        string password_hash
     }
 
     Student {
@@ -25,6 +26,7 @@ erDiagram
         string email
         string phone_number
         int parent_id FK
+        string password_hash
     }
 
     Teacher {
@@ -34,6 +36,7 @@ erDiagram
         string email
         string specialization
         boolean is_active
+        string password_hash
     }
 
     Course {
