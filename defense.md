@@ -9,6 +9,8 @@
 
 - password_hash: не було додано як атрибут до зареєстрованих користувачів, але потрібне підтвердження того, що особа, яка намагається увійти в акаунт, є саме її власником. Тому було виправлено в [spec](https://github.com/grmaryna/MathHub/commit/47ad3438b9aa8b0f95f55713873d57aab56d5744) та діаграму виправлено в [model](https://github.com/grmaryna/MathHub/commit/9b3a9c38da6cb3d90abac7b0b6420eec358ea0d5)
 
+- Course.schedule: Course.schedule повторювалось із Lesson.scheduled_at, оскільки ці дані вже зберігаються, то для спрощення системи я видалила цей атрибут. Виправлення в [spec](https://github.com/grmaryna/MathHub/commit/7dbda16d731f944c75141a91d942384c6e9c7a03) та в [model](https://github.com/grmaryna/MathHub/commit/b26afbca02722253e95fa1a2c8c3e5fc1cccc238)
+
 ## Ключове рішення — які альтернативи зважив і чому обрав цю (ADR):
 **Назва:** створення окремої сутності `Homework_submission`
 
