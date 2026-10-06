@@ -1,0 +1,86 @@
+erDiagram
+    Parent |o--o{ Student : "опікує"
+    Teacher ||--o{ Course : "веде"
+    Course ||--o{ Lesson : "складається з"
+    Lesson ||--o| Homework : "має"
+    Student ||--o{ Homework_submission : "здає"
+    Homework ||--o{ Homework_submission : "отримує"
+    Student ||--o{ Subscription : "має"
+    Course ||--o{ Subscription : "доступний за"
+
+    Parent {
+        int parent_id PK
+        string first_name
+        string second_name
+        string email
+        string phone_number
+    }
+
+    Student {
+        int student_id PK
+        string first_name
+        string second_name
+        date birth_date
+        int grade_level
+        string email
+        string phone_number
+        int parent_id FK
+    }
+
+    Teacher {
+        int teacher_id PK
+        string first_name
+        string second_name
+        string email
+        string specialization
+    }
+
+    Course {
+        int course_id PK
+        string title
+        string level
+        string description
+        string schedule
+        number price
+        int teacher_id FK
+        boolean is_active
+    }
+
+    Lesson {
+        int lesson_id PK
+        int course_id FK
+        datetime scheduled_at
+        string link
+        string recording_url
+    }
+
+    Homework {
+        int homework_id PK
+        int lesson_id FK
+        string title
+        string description
+        date due_date
+        string attachment_url
+    }
+
+    Homework_submission {
+        int homework_submission_id PK
+        int student_id FK
+        int homework_id FK
+        datetime submitted_at
+        string file_url
+        number grade
+        string feedback
+        string status
+        datetime graded_at
+    }
+
+    Subscription {
+        int subscription_id PK
+        int student_id FK
+        int course_id FK
+        date start_date
+        date end_date
+        string payment_method
+        number price
+    }
