@@ -8,14 +8,14 @@
 - `phone_number`: string
 
 ### Student
-- `student_id`: int (PK, null)
+- `student_id`: int (PK)
 - `first_name`: string
 - `second_name`: string
 - `birth_date`: date
 - `grade_level`: int
 - `email`: string
 - `phone_number`: string
-- `parent_id`: int (FK)
+- `parent_id`: int (FK, null)
 
 ### Teacher
 - `teacher_id`: int (PK)
@@ -23,6 +23,7 @@
 - `second_name`: string
 - `email`: string
 - `specialization`: string
+- `is_active`: boolean
 
 ### Course
 - `course_id`: int (PK)
@@ -102,6 +103,7 @@
 - якщо ціна курсу менша або дорівнює нулю або обов'язкові поля не заповнені, тоді система повинна відхилити збереження курсу та вказати, які поля некоректні.
 - система повинна забезпечувати, що кожен курс має рівно одного викладача, а викладач може вести кілька курсів.
 - система повинна дозволяти викладачу редагувати лише власні курси.
+- коли адміністратор деактивує викладача, система повинна встановити `is_active = false`, заборонити цьому викладачу вхід і створення нових занять та домашніх завдань; уже створені курси, заняття й оцінені роботи зберігаються.
 
 ### 3. Заняття
 
