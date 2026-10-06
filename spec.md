@@ -33,7 +33,6 @@
 - `title`: string
 - `level`: string
 - `description`: string
-- `schedule`: string
 - `price`: number
 - `teacher_id`: int (FK)
 - `is_active`: boolean
