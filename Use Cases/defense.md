@@ -9,9 +9,9 @@
 
 Виправлено в [spec](https://github.com/grmaryna/MathHub/commit/81398aefd787fb0459b22f7ad8bb72b028fd9eb8) та діаграму виправлено в [use case diagram](https://github.com/grmaryna/MathHub/commit/0ec84928e2af959051cd2b3920c28e64a6b6d758)
 
-- 
+- Guest: у вимогах було прописано, що guest має могти переглядати каталог, а в цілях та в діаграмі цього не було реацізовано.
 
-Виправлено в [spec]() та діаграму виправлено в [use case diagram]()
+Виправлено в [spec](https://github.com/grmaryna/MathHub/commit/9ad08e04233cfb175c502a21f019ed3d5c46b4e3) та діаграму виправлено в [use case diagram](https://github.com/grmaryna/MathHub/commit/e65785bbca2ebae1343d207c564dd3d1c042925f)
 
 - 
 
