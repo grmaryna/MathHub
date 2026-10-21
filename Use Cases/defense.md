@@ -13,9 +13,9 @@
 
 Виправлено в [spec](https://github.com/grmaryna/MathHub/commit/9ad08e04233cfb175c502a21f019ed3d5c46b4e3) та діаграму виправлено в [use case diagram](https://github.com/grmaryna/MathHub/commit/e65785bbca2ebae1343d207c564dd3d1c042925f)
 
-- 
+- Скасування підписки: в цілях було прописано, що користувачі можуть скасувати піжписку на курс, але не було прописаних вимог та підповідних use case в діаграмі.
 
-Виправлення в [spec]() та в [model](use case diagram)
+Виправлення в [spec](https://github.com/grmaryna/MathHub/commit/e305ee8501a98ffa2168a91dfd812210acf959aa) та в [use case diagram](https://github.com/grmaryna/MathHub/commit/0fb00ad098fdc9a9bd1bf3ac56608dd93676dfe7)
 
 ## Ключове рішення — які альтернативи зважив і чому обрав цю (ADR):
 **Назва:** Нагадування про продовження підписки
