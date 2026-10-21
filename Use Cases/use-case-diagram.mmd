@@ -7,7 +7,6 @@ flowchart LR
   A["Admin"]:::human
   PG{{"Payment Gateway"}}:::system
   ES{{"Email Service"}}:::system
-  SCH{{"Scheduler"}}:::system
 
   S -->|"is-a"| U
   P -->|"is-a"| U
@@ -39,9 +38,7 @@ flowchart LR
     UC22(["Зареєструвати викладача"]):::uc
     UC23(["Деактивувати викладача"]):::uc
     UC24(["Керувати промокодами"]):::uc
-    UC25(["Надіслати нагадування про закінчення підписки"]):::uc
-    UC26(["Закрити доступ після grace-періоду"]):::uc
-    UC27(["Надіслати email-сповіщення"]):::uc
+    UC25(["Надіслати email-сповіщення"]):::uc
   end
 
   %% Асоціації
@@ -68,18 +65,16 @@ flowchart LR
   A --- UC23
   A --- UC24
   PG --- UC8
-  ES --- UC27
-  SCH --- UC25
-  SCH --- UC26
+  ES --- UC25
 
   %% include: базовий UC -> включений
   UC1 -.->|"«include»"| UC2
-  UC1 -.->|"«include»"| UC27
+  UC1 -.->|"«include»"| UC25
   UC7 -.->|"«include»"| UC8
-  UC18 -.->|"«include»"| UC27
-  UC20 -.->|"«include»"| UC27
-  UC22 -.->|"«include»"| UC27
-  UC25 -.->|"«include»"| UC27
+  UC18 -.->|"«include»"| UC25
+  UC20 -.->|"«include»"| UC25
+  UC22 -.->|"«include»"| UC25
+  UC25 -.->|"«include»"| UC25
 
   %% extend: розширення -> базовий UC
   UC9 -.->|"«extend»"| UC7
