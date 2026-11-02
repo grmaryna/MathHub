@@ -23,11 +23,12 @@
 
 
 ### Кроки сценарію
-| Взаємодія | Що відбувається | Крок Gherkin |
-|--|--|--|
-| Scheduler - SubscriptionService | Scheduler робить запит про надання даних про усі підписки, термін яких минув| Коли Scheduler виконує щоденну перевірку підписок |
-| SubscriptionService - Subscription | SubscriptionService запитує всі підписки, у яких end_date уже минув, і отримує їх список | І від end_date минуло <днів> діб |
-| SubscriptionService - Subscription | для кожної прострочена підписки SubscriptionService шукає останню підписку цього студента на цей курс, щоб перевірити, чи немає нової | Припустимо нової підписки на цей курс у Олени немає |
-| Student - SubscriptionService | Коли Student відкриває курс, то SubscriptionService читає останню підписку, бачить статус grace і повертає посилання на заняття| Тоді Олена має доступ до занять курсу |
-| Student - SubscriptionService | Student здає ДЗ, SubscriptionService перевіряє, що підписка має статус grace, і приймає здачу | І Олена може здати ДЗ |
-| SubscriptionService - Student | Якщо статус підписки grace, SubscriptionService додає до відповіді пропозицію продовжити підписку | І Олена бачить пропозицію продовжити підписку |
+| Взаємодія | Виклик | Що відбувається | Крок Gherkin |
+|--|--|--|--|
+| Scheduler - SubscriptionService | runDailyCheck() | Scheduler запускає щоденну перевірку підписок| Коли Scheduler виконує щоденну перевірку підписок |
+| SubscriptionService - Subscription | findExpired(today) | SubscriptionService запитує всі підписки, у яких end_date уже минув, і отримує їх список | І від end_date минуло <днів> діб |
+| SubscriptionService - Subscription | findLatestSubscription(studentId, courseId) | loop: для кожної прострочена підписки SubscriptionService шукає останню підписку цього студента на цей курс, щоб перевірити, чи немає нової | Припустимо нової підписки на цей курс у Олени немає |
+| SubscriptionService - Subscription | updateStatus(subscriptionId, “grace”) | alt: якщо нової підписки немає і від end_date минуло не більше 7 діб, SubscriptionService виставляє статус grace | внутрішній крок |
+| Student - SubscriptionService | openCourse(courseId) | Коли Student відкриває курс, то SubscriptionService читає останню підписку, бачить статус grace і повертає посилання на заняття | Тоді Олена має доступ до занять курсу |
+| Student - SubscriptionService | submitHomework(homeworkId, file) | Student здає ДЗ, SubscriptionService перевіряє, що підписка має статус active або grace, і приймає здачу | І Олена може здати ДЗ |
+| SubscriptionService - Student | returnRenewalOffer() | Якщо статус підписки grace, SubscriptionService додає до відповіді пропозицію продовжити підписку | І Олена бачить пропозицію продовжити підписку |
