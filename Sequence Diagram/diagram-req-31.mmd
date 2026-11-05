@@ -1,0 +1,37 @@
+sequenceDiagram
+    autonumber
+    actor Student
+    participant Scheduler
+    participant SubscriptionService
+    participant Subscription
+
+    Note over Scheduler,Subscription: Фаза 1: щоденна перевірка підписок
+
+    Scheduler->>SubscriptionService: runDailyCheck()
+    SubscriptionService->>Subscription: findExpired(today)
+    Subscription-->>SubscriptionService: список прострочених підписок (status ≠ closed)
+
+    loop для кожної простроченої підписки
+        SubscriptionService->>Subscription: findLatestSubscription(studentId, courseId)
+        Subscription-->>SubscriptionService: остання підписка студента на курс
+
+        alt нової підписки немає і від end_date минуло ≤ 7 діб
+            SubscriptionService->>Subscription: updateStatus(subscriptionId, "grace")
+            Subscription-->>SubscriptionService: статус оновлено
+        end
+    end
+
+    Note over Student,Subscription: Фаза 2: Олена користується курсом у grace-періоді
+
+    Student->>SubscriptionService: openCourse(courseId)
+    SubscriptionService->>Subscription: findLatestSubscription(studentId, courseId)
+    Subscription-->>SubscriptionService: підписка зі статусом "grace"
+    SubscriptionService-->>Student: посилання на заняття курсу
+
+    Student->>SubscriptionService: submitHomework(homeworkId, file)
+    Note right of SubscriptionService: перевіряє, що статус "active" або "grace"
+    SubscriptionService-->>Student: здачу ДЗ прийнято
+
+    opt статус підписки "grace"
+        SubscriptionService-->>Student: returnRenewalOffer() — пропозиція продовжити підписку
+    end
