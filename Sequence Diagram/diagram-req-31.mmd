@@ -8,22 +8,23 @@ sequenceDiagram
 
     Note over Scheduler,Subscription: Фаза 1: щоденна перевірка підписок
 
-    Scheduler->>SubscriptionService: runDailyCheck()
-    SubscriptionService->>Subscription: findExpired(today)
-    Subscription-->>SubscriptionService: список прострочених підписок (без closed і expired)
+    Scheduler->>+SubscriptionService: runDailyCheck()
+    SubscriptionService->>+Subscription: findExpired(today)
+    Subscription-->>-SubscriptionService: список прострочених підписок (без closed і expired)
 
     loop для кожної простроченої підписки
-        SubscriptionService->>Subscription: findLatestSubscription(studentId, courseId)
-        Subscription-->>SubscriptionService: остання підписка студента на курс
+        SubscriptionService->>+Subscription: findLatestSubscription(studentId, courseId)
+        Subscription-->>-SubscriptionService: остання підписка студента на курс
 
         alt нової підписки немає і від end_date минуло ≤ 7 діб
-            SubscriptionService->>Subscription: updateStatus(subscriptionId, "grace")
+            SubscriptionService->>+Subscription: updateStatus(subscriptionId, "grace")
             Note right of Subscription: ідемпотентно: для підписки, що вже в grace, статус той самий
-            Subscription-->>SubscriptionService: статус оновлено
+            Subscription-->>-SubscriptionService: статус оновлено
         else інакше
             Note right of SubscriptionService: статус не змінюється
         end
     end
+    SubscriptionService-->>-Scheduler: checkCompleted()
 
     Note over Student,Lesson: Фаза 2: Олена користується курсом у grace-періоді
 
