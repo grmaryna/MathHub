@@ -33,12 +33,13 @@ sequenceDiagram
     Subscription-->>SubscriptionService: підписка зі статусом "grace"
     SubscriptionService->>Lesson: getLink(courseId)
     Lesson-->>SubscriptionService: посилання на заняття
+    
+    opt статус підписки "grace"
+        SubscriptionService->>SubscriptionService: buildRenewalOffer()
+    end
+
     SubscriptionService-->>Student: посилання на заняття курсу
 
     Student->>SubscriptionService: submitHomework(homeworkId, file)
     Note right of SubscriptionService: перевіряє, що статус "active" або "grace"
     SubscriptionService-->>Student: здачу ДЗ прийнято
-
-    opt статус підписки "grace"
-        SubscriptionService-->>Student: returnRenewalOffer() — пропозиція продовжити підписку
-    end
