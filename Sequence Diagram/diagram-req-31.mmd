@@ -4,7 +4,6 @@ sequenceDiagram
     participant Scheduler
     participant SubscriptionService
     participant Subscription
-    participant Lesson
 
     Note over Scheduler,Subscription: Фаза 1: щоденна перевірка підписок
 
@@ -26,19 +25,16 @@ sequenceDiagram
     end
     SubscriptionService-->>-Scheduler: checkCompleted()
 
-    Note over Student,Lesson: Фаза 2: Олена користується курсом у grace-періоді
+    Note over Student,Subscription: Фаза 2: Олена користується курсом у grace-періоді
 
-    Student->>SubscriptionService: openCourse(courseId)
-    SubscriptionService->>Subscription: findLatestSubscription(studentId, courseId)
-    Subscription-->>SubscriptionService: підписка зі статусом "grace"
-    SubscriptionService->>Lesson: getLink(courseId)
-    Lesson-->>SubscriptionService: посилання на заняття
-
+        Student->>+SubscriptionService: openCourse(courseId)
+    SubscriptionService->>+Subscription: findLatestSubscription(studentId, courseId)
+    Subscription-->>-SubscriptionService: підписка зі статусом "grace"
     opt статус підписки "grace"
         SubscriptionService->>SubscriptionService: buildRenewalOffer()
     end
-
-    SubscriptionService-->>Student: посилання на заняття курсу + пропозиція продовжити підписку (якщо grace)
+    
+    SubscriptionService-->>-Student: посилання на заняття курсу і пропозиція продовжити підписку
 
     Student->>+SubscriptionService: submitHomework(homeworkId, file)
     SubscriptionService->>+Subscription: findLatestSubscription(studentId, courseId)
