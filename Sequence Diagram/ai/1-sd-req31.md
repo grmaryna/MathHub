@@ -131,4 +131,5 @@ sequenceDiagram
 ### Виправлення:
 - змінено підпис гілки else: [коміт](https://github.com/grmaryna/MathHub/commit/3e9183632867a8bfca4abe79a77eb80a08b2b26c)
 - runDailyCheck() не мав return, тож Scheduler не отримує відповіді, тому додано checkCompleted() та змінено стрілки: [коміт](https://github.com/grmaryna/MathHub/commit/ef680cdb2fd8b32145c8b824cb8d0a05200facae)
-- студент має бачити пропозицію, коли відкриває курс. Також returnRenewalOffer() названо як виклик, але це частина відповіді, змінена в [коміті]()
+- студент має бачити пропозицію, коли відкриває курс. Також returnRenewalOffer() названо як виклик, але це частина відповіді, змінена в [коміті](https://github.com/grmaryna/MathHub/commit/406cc6696562d0dd955cef61e69b3c6a82f95f6d)
+- додала виклик findLatestSubscription і alt в [коміт]()
