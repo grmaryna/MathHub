@@ -4,12 +4,13 @@ sequenceDiagram
     participant Scheduler
     participant SubscriptionService
     participant Subscription
+    participant Lesson
 
     Note over Scheduler,Subscription: Фаза 1: щоденна перевірка підписок
 
     Scheduler->>SubscriptionService: runDailyCheck()
     SubscriptionService->>Subscription: findExpired(today)
-    Subscription-->>SubscriptionService: список прострочених підписок (status ≠ closed)
+    Subscription-->>SubscriptionService: список прострочених підписок (без closed і expired)
 
     loop для кожної простроченої підписки
         SubscriptionService->>Subscription: findLatestSubscription(studentId, courseId)
@@ -17,15 +18,20 @@ sequenceDiagram
 
         alt нової підписки немає і від end_date минуло ≤ 7 діб
             SubscriptionService->>Subscription: updateStatus(subscriptionId, "grace")
+            Note right of Subscription: ідемпотентно: для підписки, що вже в grace, статус той самий
             Subscription-->>SubscriptionService: статус оновлено
+        else інакше
+            Note right of SubscriptionService: статус не змінюється
         end
     end
 
-    Note over Student,Subscription: Фаза 2: Олена користується курсом у grace-періоді
+    Note over Student,Lesson: Фаза 2: Олена користується курсом у grace-періоді
 
     Student->>SubscriptionService: openCourse(courseId)
     SubscriptionService->>Subscription: findLatestSubscription(studentId, courseId)
     Subscription-->>SubscriptionService: підписка зі статусом "grace"
+    SubscriptionService->>Lesson: getLink(courseId)
+    Lesson-->>SubscriptionService: посилання на заняття
     SubscriptionService-->>Student: посилання на заняття курсу
 
     Student->>SubscriptionService: submitHomework(homeworkId, file)
