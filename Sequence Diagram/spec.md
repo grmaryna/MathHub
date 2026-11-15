@@ -38,7 +38,7 @@
 | Взаємодія | Виклик | Що відбувається | Крок Gherkin |
 |--|--|--|--|
 | `Scheduler` - `SubscriptionService` | `runDailyCheck()` | `Scheduler` запускає щоденну перевірку підписок; після обробки всіх підписок `SubscriptionService` повертає `checkCompleted()` | Коли `Scheduler` виконує щоденну перевірку підписок |
-| `SubscriptionService` - `Subscription` | `findExpired(today)` | `SubscriptionService` запитує підписки, у яких `end_date` уже минув і статус не `closed` та не `expired`, і отримує їх список | І від `end_date` минуло <днів> діб |
+| `SubscriptionService` - `Subscription` | `findExpired(today)` | `SubscriptionService` запитує підписки, у яких `end_date` уже минув і статус `active` або `grace`, і отримує їх список | І від `end_date` минуло <днів> діб |
 | `SubscriptionService` - `Subscription` | `findLatestSubscription(studentId, courseId)` | loop: для кожної простроченої підписки `SubscriptionService` шукає останню підписку цього студента на цей курс, щоб перевірити, чи немає нової | Припустимо нової підписки на цей курс у Олени немає |
 | `SubscriptionService` - `Subscription` | `updateStatus(subscriptionId, "grace")` | alt: якщо нової підписки немає і від `end_date` минуло не більше 7 діб, `SubscriptionService` виставляє статус `grace`; інакше статус не змінюється | — (внутрішній крок, реалізує REQ-31; забезпечує результат «Олена має доступ до занять курсу») |
 | `Student` - `SubscriptionService` | `openCourse(courseId)` | `Student` відкриває курс; відповідь містить посилання на заняття і пропозицію продовжити підписку, якщо її сформовано | Тоді Олена має доступ до занять курсу |
@@ -85,7 +85,7 @@
 | Взаємодія | Виклик | Що відбувається | Крок Gherkin |
 |--|--|--|--|
 | `Scheduler` - `SubscriptionService` | `runDailyCheck()` | `Scheduler` запускає щоденну перевірку підписок | Коли `Scheduler` виконує щоденну перевірку підписок |
-| `SubscriptionService` - `Subscription` | `findExpired(today)` | `SubscriptionService` запитує підписки, у яких `end_date` уже минув і статус не `closed`, і отримує їх список | І від `end_date` минуло 8 діб |
+| `SubscriptionService` - `Subscription` | `findExpired(today)` | `SubscriptionService` запитує підписки, у яких `end_date` уже минув і статус `active` або `grace`, і отримує їх список | І від `end_date` минуло 8 діб |
 | `SubscriptionService` - `Subscription` | `findLatestSubscription(studentId, courseId)` | loop: для кожної простроченої підписки `SubscriptionService` шукає останню підписку цього студента на цей курс, щоб перевірити, чи немає нової | І нової підписки на цей курс у Олени немає |
 | `SubscriptionService` - `Subscription` | `updateStatus(subscriptionId, "closed")` | alt: якщо нової підписки немає і від `end_date` минуло більше 7 діб, `SubscriptionService` виставляє статус `closed`. `Homework_submission` при цьому не змінюється | внутрішня робота |
 | `Student` - `SubscriptionService` | `openCourse(courseId)` | `Student` відкриває курс, `SubscriptionService` читає останню підписку, бачить статус `closed` і повертає лише заняття та ДЗ, створені до `end_date` | Тоді Олена бачить заняття і ДЗ, опубліковані до `end_date` |
@@ -110,7 +110,7 @@
 | `SubscriptionService` - `Course` | `getCourseTerms(courseId)` | `SubscriptionService` отримує `duration` і поточну `price` курсу | внутрішній крок |
 | `SubscriptionService` - `Subscription` | `createSubscription(studentId, courseId, startDate, endDate, paymentMethod, price)` | `SubscriptionService` створює нову підписку: `startDate` = попередній `end_date` + 1 доба, статус `active` | І створено нову підписку, що починається "2026-10-02" |
 | `Scheduler` - `SubscriptionService` | `runDailyCheck()` | `Scheduler` запускає щоденну перевірку підписок | І `Scheduler` виконує щоденну перевірку підписок |
-| `SubscriptionService` - `Subscription` | `findExpired(today)` | `SubscriptionService` запитує підписки, у яких `end_date` уже минув і статус не `closed`; у списку є попередня підписка Олени | Припустимо від end_date минуло 3 доби |
+| `SubscriptionService` - `Subscription` | `findExpired(today)` | `SubscriptionService` запитує підписки, у яких `end_date` уже минув і статус `active` або `grace`; у списку є попередня підписка Олени (статус `grace`) | Припустимо від end_date минуло 3 доби |
 | `SubscriptionService` - `Subscription` | `findLatestSubscription(studentId, courseId)` | loop: для кожної простроченої підписки `SubscriptionService` перевіряє, чи є новіша підписка | внутрішній крок |
 | `SubscriptionService` - `Subscription` | `updateStatus(subscriptionId, "expired")` | alt: якщо є новіша підписка, `SubscriptionService` позначає стару як `expired` і не закриває доступ; інакше (нової немає) діють сценарії 1 і 2 | Тоді Олена має доступ до занять курсу |
 | `Student` - `SubscriptionService` | `openCourse(courseId)` | `Student` відкриває курс, `SubscriptionService` читає останню підписку (нову, `active`) і повертає посилання на заняття | Тоді Олена має доступ до занять курсу |
