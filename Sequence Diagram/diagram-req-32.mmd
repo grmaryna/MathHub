@@ -1,0 +1,44 @@
+sequenceDiagram
+    autonumber
+    actor Student
+    participant Scheduler
+    participant SubscriptionService
+    participant Subscription
+
+    Note over Scheduler,Subscription: Фаза 1: щоденна перевірка підписок (від end_date минуло 8 діб)
+
+    Scheduler->>+SubscriptionService: runDailyCheck()
+    SubscriptionService->>+Subscription: findExpired(today)
+    Subscription-->>-SubscriptionService: список прострочених підписок (статус active або grace)
+
+    loop для кожної простроченої підписки
+        SubscriptionService->>+Subscription: findLatestSubscription(studentId, courseId)
+        Subscription-->>-SubscriptionService: остання підписка студента на курс
+
+        alt нової підписки немає і від end_date минуло > 7 діб
+            SubscriptionService->>+Subscription: updateStatus(subscriptionId, "closed")
+            Subscription-->>-SubscriptionService: статус оновлено
+        else інакше
+            Note right of SubscriptionService: статус не змінюється
+        end
+    end
+    SubscriptionService-->>-Scheduler: checkCompleted()
+
+    Note over Student,Subscription: Фаза 2: Олена відкриває курс і здає ДЗ після закриття доступу
+
+    Student->>+SubscriptionService: openCourse(courseId)
+    SubscriptionService->>+Subscription: findLatestSubscription(studentId, courseId)
+    Subscription-->>-SubscriptionService: підписка зі статусом "closed"
+    opt статус підписки "closed"
+        SubscriptionService->>SubscriptionService: filterContentUntil(endDate)
+        SubscriptionService->>SubscriptionService: buildNewSubscriptionOffer()
+    end
+    SubscriptionService-->>-Student: заняття і ДЗ, створені до end_date, і пропозиція оформити нову підписку
+
+    Student->>+SubscriptionService: submitHomework(homeworkId, file)
+    SubscriptionService->>+Subscription: findLatestSubscription(studentId, courseId)
+    Subscription-->>-SubscriptionService: підписка зі статусом "closed"
+    opt статус підписки "closed"
+        SubscriptionService-->>Student: помилка "доступ закрито"
+    end
+    deactivate SubscriptionService
