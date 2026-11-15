@@ -17,7 +17,7 @@ sequenceDiagram
 
         alt нової підписки немає і від end_date минуло ≤ 7 діб
             SubscriptionService->>+Subscription: updateStatus(subscriptionId, "grace")
-            Note right of Subscription: ідемпотентно: для підписки, що вже в grace, статус той самий
+                Note right of Subscription: ідемпотентно: для підписки, що вже в grace, статус не змінюється
             Subscription-->>-SubscriptionService: статус оновлено
         else інакше
             Note right of SubscriptionService: статус не змінюється
