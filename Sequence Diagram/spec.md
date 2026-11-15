@@ -63,13 +63,16 @@
 
 | Взаємодія | Виклик | Що відбувається | Крок Gherkin |
 |--|--|--|--|
-| `Scheduler` - `SubscriptionService` | `runDailyCheck()` | `Scheduler` запускає щоденну перевірку підписок | Коли `Scheduler` виконує щоденну перевірку підписок |
+| `Scheduler` - `SubscriptionService` | `runDailyCheck()` | `Scheduler` запускає щоденну перевірку підписок; після обробки всіх підписок `SubscriptionService` повертає `checkCompleted()` | Коли `Scheduler` виконує щоденну перевірку підписок |
 | `SubscriptionService` - `Subscription` | `findExpired(today)` | `SubscriptionService` запитує підписки, у яких `end_date` уже минув і статус `active` або `grace`, і отримує їх список | І від `end_date` минуло 8 діб |
-| `SubscriptionService` - `Subscription` | `updateStatus(subscriptionId, "closed")` | alt: якщо нової підписки немає і від `end_date` минуло більше 7 діб, `SubscriptionService` виставляє статус `closed` | внутрішній крок |
 | `SubscriptionService` - `Subscription` | `findLatestSubscription(studentId, courseId)` | loop: для кожної простроченої підписки `SubscriptionService` шукає останню підписку цього студента на цей курс, щоб перевірити, чи немає нової | Припустимо нової підписки на цей курс у Олени немає |
-| `Student` - `SubscriptionService` | `openCourse(courseId)` | alt: `Student` відкриває курс, `SubscriptionService` читає останню підписку, бачить статус `closed` і повертає лише заняття та ДЗ, створені до `end_date` | Тоді Олена не бачить нове заняття і нове ДЗ, опубліковані після `end_date`|
-| `SubscriptionService` - `SubscriptionService` | `buildNewSubscriptionOffer()` | opt: якщо статус `closed`, `SubscriptionService` формує пропозицію оформити нову підписку | І Олена бачить пропозицію оформити нову підписку |
-| `Student` - `SubscriptionService` | `submitHomework(homeworkId, file)` | `Student` здає ДЗ, `SubscriptionService` перевіряє статус підписки; якщо `closed`, відхиляє здачу з помилкою | І Олена не може здати ДЗ попередніх занять |
+| `SubscriptionService` - `Subscription` | `updateStatus(subscriptionId, "closed")` | alt: якщо нової підписки немає і від `end_date` минуло більше 7 діб, `SubscriptionService` виставляє статус `closed`; інакше статус не змінюється | внутрішній крок |
+| `Student` - `SubscriptionService` | `openCourse(courseId)` | `Student` відкриває курс; відповідь містить заняття і ДЗ, створені до `end_date`, та пропозицію оформити нову підписку | Тоді Олена не бачить нове заняття і нове ДЗ, опубліковані після `end_date` |
+| `SubscriptionService` - `Subscription` | `findLatestSubscription(studentId, courseId)` | `SubscriptionService` читає останню підписку студента на цей курс і отримує статус `closed` | внутрішній крок |
+| `SubscriptionService` - `SubscriptionService` | `filterContentUntil(endDate)` | opt (один фрагмент із наступним рядком): якщо статус `closed`, залишає лише заняття та ДЗ, створені до `end_date` | І Олена бачить заняття і ДЗ, опубліковані до `end_date` |
+| `SubscriptionService` - `SubscriptionService` | `buildNewSubscriptionOffer()` | opt: якщо статус `closed`, формує пропозицію оформити нову підписку для відповіді | І Олена бачить пропозицію оформити нову підписку |
+| `Student` - `SubscriptionService` | `submitHomework(homeworkId, file)` | `Student` здає ДЗ; `SubscriptionService` повертає помилку "доступ закрито" після перевірки статусу підписки | І Олена не може здати ДЗ попередніх занять |
+| `SubscriptionService` - `Subscription` | `findLatestSubscription(studentId, courseId)` | `SubscriptionService` читає останню підписку студента на цей курс і отримує статус `closed`, тому відхиляє здачу | внутрішній крок |
 
 ## @REQ-33
 
