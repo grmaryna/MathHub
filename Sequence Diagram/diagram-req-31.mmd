@@ -34,7 +34,7 @@ sequenceDiagram
         SubscriptionService->>SubscriptionService: buildRenewalOffer()
     end
     
-    SubscriptionService-->>-Student: посилання на заняття курсу і пропозиція продовжити підписку
+    SubscriptionService-->>-Student: посилання на заняття курсу (+ пропозиція продовжити підписку, якщо grace)
 
     Student->>+SubscriptionService: submitHomework(homeworkId, file)
     SubscriptionService->>+Subscription: findLatestSubscription(studentId, courseId)

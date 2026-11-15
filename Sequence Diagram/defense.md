@@ -8,9 +8,9 @@
 
 Виправлено в [spec](88bdb54c326d98d8a704d7e2b601deb1a4112ac2) та діаграму виправлено в [diagram](7c95e7bea0fb513a604d9eac504a947cc10d684d)
 
-- 
+- У spec прописаний статус "не closed", у діаграмі return "без closed і expired"
 
-Виправлено в [spec]() та діаграму виправлено в [diagram]()
+Виправлено в [spec](10529c02a1bcc5cb61e8d01192caf499fd69c451) та діаграму виправлено в [diagram](3841db7f5d53baa381f313bc235c93c4e9202cde)
 
 - 
 
