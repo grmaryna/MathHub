@@ -38,11 +38,5 @@ sequenceDiagram
 
     Student->>+SubscriptionService: submitHomework(homeworkId, file)
     SubscriptionService->>+Subscription: findLatestSubscription(studentId, courseId)
-    Subscription-->>-SubscriptionService: остання підписка студента на курс
-
-    alt статус "active" або "grace"
-        SubscriptionService-->>Student: здачу ДЗ прийнято
-    else інакше
-        SubscriptionService-->>Student: помилка "доступ закрито"
-    end
-    deactivate SubscriptionService
+    Subscription-->>-SubscriptionService: остання підписка студента зі статусом "grace"
+    SubscriptionService-->>-Student: здачу ДЗ прийнято
