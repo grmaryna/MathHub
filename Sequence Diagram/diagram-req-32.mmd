@@ -33,7 +33,7 @@ sequenceDiagram
         SubscriptionService->>SubscriptionService: filterContentUntil(endDate)
         SubscriptionService->>SubscriptionService: buildNewSubscriptionOffer()
     end
-    SubscriptionService-->>-Student: заняття і ДЗ, створені до end_date, і пропозиція оформити нову підписку
+    SubscriptionService-->>-Student: заняття і ДЗ (лише створені до end_date, якщо closed) та пропозиція оформити нову підписку (якщо closed)
 
     Student->>+SubscriptionService: submitHomework(homeworkId, file)
     SubscriptionService->>+Subscription: findLatestSubscription(studentId, courseId)

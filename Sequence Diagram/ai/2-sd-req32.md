@@ -133,6 +133,7 @@ sequenceDiagram
     deactivate SubscriptionService
 
 ### Коментар
+
 - рядки:
 ```mermaid
 opt статус підписки "closed"
@@ -142,7 +143,13 @@ deactivate SubscriptionService
 ```
 Тож якщо статус не `closed`, студент не отримує жодної відповіді на `submitHomework`
 
-- 
+- рядок:
+```mermaid
+SubscriptionService-->>-Student: заняття і ДЗ, створені до end_date, і пропозиція оформити нову підписку
+```
+Над ним стоїть opt статус підписки `closed`, тобто і фільтр за датою, і пропозиція виконуються лише при `closed`. А підпис `return` стверджує, що вони є завжди.
 
 ### Зміни
-- прибираєм `opt` і `deactivate`, а смугу закрити самим `return` (-->>-): [коміт]()
+
+- прибираєм `opt` і `deactivate`, а смугу закрити самим `return` (-->>-): [коміт](73f13e705a62357e643bbbb3db4ddef4c1e82cea)
+- роблю підпис умовним як в `opt`: [коміт]()
