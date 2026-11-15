@@ -9,7 +9,7 @@ sequenceDiagram
 
     Scheduler->>+SubscriptionService: runDailyCheck()
     SubscriptionService->>+Subscription: findExpired(today)
-    Subscription-->>-SubscriptionService: список прострочених підписок (без closed і expired)
+    Subscription-->>-SubscriptionService: список прострочених підписок (статус active або grace)
 
     loop для кожної простроченої підписки
         SubscriptionService->>+Subscription: findLatestSubscription(studentId, courseId)
