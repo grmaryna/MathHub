@@ -133,3 +133,16 @@ sequenceDiagram
     deactivate SubscriptionService
 
 ### Коментар
+- рядки:
+```mermaid
+opt статус підписки "closed"
+    SubscriptionService-->>Student: помилка "доступ закрито"
+end
+deactivate SubscriptionService
+```
+Тож якщо статус не `closed`, студент не отримує жодної відповіді на `submitHomework`
+
+- 
+
+### Зміни
+- прибираєм `opt` і `deactivate`, а смугу закрити самим `return` (-->>-): [коміт]()

@@ -38,7 +38,4 @@ sequenceDiagram
     Student->>+SubscriptionService: submitHomework(homeworkId, file)
     SubscriptionService->>+Subscription: findLatestSubscription(studentId, courseId)
     Subscription-->>-SubscriptionService: підписка зі статусом "closed"
-    opt статус підписки "closed"
-        SubscriptionService-->>Student: помилка "доступ закрито"
-    end
-    deactivate SubscriptionService
+    SubscriptionService-->>-Student: помилка "доступ закрито"
