@@ -73,4 +73,4 @@ sequenceDiagram
 Activation bars парні, а бар SubscriptionService не обривається в гілках alt і opt. Додані фрагменти: opt, loop, alt.
 
 ### Коментар та виправлення:
-- opt на початку Фази 1 у spec немає і рядок `createSubscription` уже каже «startDate = попередній end_date + 1 доба»: [коміт]()
+- opt на початку Фази 1 у spec немає і рядок `createSubscription` уже каже «startDate = попередній end_date + 1 доба»: [коміт](https://github.com/grmaryna/MathHub/commit/744ead3ef47f34ff9fb9089980952be1a5133083)

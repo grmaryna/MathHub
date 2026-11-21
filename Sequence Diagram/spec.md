@@ -24,6 +24,7 @@
 | `Homework_submission` | сутність | зберігає здачу, `grade`, `feedback`, `graded_at`; закриття доступу їх не змінює |
 | `Course` | сутність | надає `duration` і `price` для розрахунку нової підписки |
 | `Payment Gateway` | зовнішня система | підтверджує оплату продовження |
+| `Payment` | сутність | зберігає платіж: статус `success`, `amount`, зв'язок із новою підпискою |
 
 ## @REQ-31
 
@@ -128,6 +129,7 @@
 | `SubscriptionService` - `Subscription` | `findLatestSubscription(studentId, courseId)` | `SubscriptionService` знаходить попередню підписку Олени (`end_date` = 2026-10-01, статус `grace`) | І учень Олена мала підписку на цей курс з end_date "2026-10-01" (передумова) |
 | `SubscriptionService` - `Course` | `getCourseTerms(courseId)` | `SubscriptionService` отримує `duration` і поточну `price` курсу | внутрішній крок |
 | `SubscriptionService` - `Subscription` | `createSubscription(studentId, courseId, startDate, endDate, paymentMethod, price)` | `SubscriptionService` створює нову підписку: `startDate` = попередній `end_date` + 1 доба, статус `active` | І створено нову підписку, що починається "2026-10-02" |
+| `SubscriptionService` - `Payment` | `createPayment(subscriptionId, externalPaymentId, amount, status)` | `SubscriptionService` зберігає успішний платіж і зв'язує його з новою підпискою | внутрішній крок |
 | `Scheduler` - `SubscriptionService` | `runDailyCheck()` | `Scheduler` запускає щоденну перевірку підписок | І `Scheduler` виконує щоденну перевірку підписок |
 | `SubscriptionService` - `Subscription` | `findExpired(today)` | `SubscriptionService` запитує підписки, у яких `end_date` уже минув і статус `active` або `grace`; у списку є попередня підписка Олени (статус `grace`) | Припустимо від end_date минуло 3 доби |
 | `SubscriptionService` - `Subscription` | `findLatestSubscription(studentId, courseId)` | loop: для кожної простроченої підписки `SubscriptionService` перевіряє, чи є новіша підписка | внутрішній крок |
