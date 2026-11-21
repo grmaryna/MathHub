@@ -8,6 +8,7 @@
 
 Ось діаграма @REQ-32 за таблицею зі spec_1.md. Там, де spec неоднозначний, я вибрала варіант, найближчий до діаграми @REQ-31, і виніс питання нижче.
 
+```mermaid
 sequenceDiagram
     autonumber
     actor Student
@@ -53,6 +54,7 @@ sequenceDiagram
         SubscriptionService-->>Student: здачу ДЗ прийнято
     end
     deactivate SubscriptionService
+```
 
 Що я вирішила сама
 Порядок у фазі 1. У spec рядок updateStatus стоїть перед findLatestSubscription, але логічно спершу перевіряється, чи є нова підписка. У діаграмі findLatestSubscription іде першим, усередині loop.
@@ -87,6 +89,7 @@ text
 
 Оновила діаграму за вашими відповідями: opt у openCourse має обидва внутрішні кроки, у submitHomework лишилася тільки помилка, Lesson і збереження здачі не додавала.
 
+```mermaid
 sequenceDiagram
     autonumber
     actor Student
@@ -131,6 +134,7 @@ sequenceDiagram
         SubscriptionService-->>Student: помилка "доступ закрито"
     end
     deactivate SubscriptionService
+```
 
 ### Коментар
 

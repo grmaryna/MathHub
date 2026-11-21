@@ -8,6 +8,7 @@
 
 Ось діаграма для REQ-31. Дії Student відбуваються після щоденної перевірки, тому я розділив їх нотатками на дві фази.
 
+```mermaid
 sequenceDiagram
     autonumber
     actor Student
@@ -45,6 +46,7 @@ sequenceDiagram
     opt статус підписки "grace"
         SubscriptionService-->>Student: returnRenewalOffer() — пропозиція продовжити підписку
     end
+```
 
 Припущення, які я зробив:
 
@@ -75,6 +77,7 @@ returnRenewalOffer() показав як opt усередині відповід
 
 Дякую, оновив діаграму за вашими відповідями.
 
+```mermaid
 sequenceDiagram
     autonumber
     actor Student
@@ -118,6 +121,7 @@ sequenceDiagram
     opt статус підписки "grace"
         SubscriptionService-->>Student: returnRenewalOffer() — пропозиція продовжити підписку
     end
+```
 
 Одне припущення: назву виклику getLink(courseId) я вигадав, бо в таблиці вона не вказана. Якщо в завданні 2 чи в моделі є інша назва, підставлю її.
 
