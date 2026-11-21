@@ -62,6 +62,4 @@ sequenceDiagram
 Де діаграма відходить від таблиці в spec.md
 
 ### Коментар та виправлення:
-- джерело endDate у filterContentUntil(endDate) не показане: [коміт]()
-
-
+- джерело endDate у filterContentUntil(endDate) не показане: [коміт](https://github.com/grmaryna/MathHub/commit/da3933f8fb26bdfa584d3436377fdc6375c04404)

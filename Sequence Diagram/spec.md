@@ -106,7 +106,7 @@
 | `SubscriptionService` - `Subscription` | `updateStatus(subscriptionId, "closed")` | alt: якщо нової підписки немає і від `end_date` минуло більше 7 діб, `SubscriptionService` виставляє статус `closed`. `Homework_submission` при цьому не змінюється | внутрішня робота |
 | `Student` - `SubscriptionService` | `openCourse(courseId)` | `Student` відкриває курс, `SubscriptionService` читає останню підписку, бачить статус `closed` і повертає лише заняття та ДЗ, створені до `end_date` | Тоді Олена бачить заняття і ДЗ, опубліковані до `end_date` |
 | `Student` - `SubscriptionService` | `getSubmissionResults(courseId)` | `Student` просить свої результати за курсом | І Олена бачить оцінку 85 і фідбек "Гарна робота" до свого ДЗ |
-| `SubscriptionService` - `Homework_submission` | `findGradedSubmissions(studentId, courseId, endDate)` | `SubscriptionService` читає здачі зі статусом `graded` і `graded_at` не пізніше `end_date`, повертає `grade` і `feedback` | І Олена бачить оцінку 85 і фідбек "Гарна робота" до свого ДЗ |
+| `SubscriptionService` - `Homework_submission` | `findGradedSubmissions(studentId, courseId)` | `SubscriptionService` читає здачі студента за курсом зі статусом `graded` і повертає `grade` і `feedback`; фільтра за датою немає | І Олена бачить оцінку 85 і фідбек "Гарна робота" до ДЗ |
 
 ## @REQ-34
 
