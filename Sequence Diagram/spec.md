@@ -99,11 +99,12 @@
 
 | Взаємодія | Виклик | Що відбувається | Крок Gherkin |
 |--|--|--|--|
-| `Scheduler` - `SubscriptionService` | `runDailyCheck()` | `Scheduler` запускає щоденну перевірку підписок | Коли `Scheduler` виконує щоденну перевірку підписок |
+| `Scheduler` - `SubscriptionService` | `runDailyCheck()` | `Scheduler` запускає щоденну перевірку підписок; після обробки всіх підписок `SubscriptionService` повертає `checkCompleted()` | Коли `Scheduler` виконує щоденну перевірку підписок |
 | `SubscriptionService` - `Subscription` | `findExpired(today)` | `SubscriptionService` запитує підписки, у яких `end_date` уже минув і статус `active` або `grace`, і отримує їх список | І від `end_date` минуло 8 діб |
 | `SubscriptionService` - `Subscription` | `findLatestSubscription(studentId, courseId)` | loop: для кожної простроченої підписки `SubscriptionService` шукає останню підписку цього студента на цей курс, щоб перевірити, чи немає нової | І нової підписки на цей курс у Олени немає |
-| `SubscriptionService` - `Subscription` | `updateStatus(subscriptionId, "closed")` | alt: якщо нової підписки немає і від `end_date` минуло більше 7 діб, `SubscriptionService` виставляє статус `closed`. `Homework_submission` при цьому не змінюється | внутрішня робота |
+| `SubscriptionService` - `Subscription` | `updateStatus(subscriptionId, "closed")` | alt: якщо нової підписки немає і від `end_date` минуло більше 7 діб, `SubscriptionService` виставляє статус `closed`; інакше статус не змінюється. `Homework_submission` при цьому не змінюється | внутрішній крок |
 | `Student` - `SubscriptionService` | `openCourse(courseId)` | `Student` відкриває курс, `SubscriptionService` читає останню підписку, бачить статус `closed` і повертає лише заняття та ДЗ, створені до `end_date` | Тоді Олена бачить заняття і ДЗ, опубліковані до `end_date` |
+| `SubscriptionService` - `Subscription` | `findLatestSubscription(studentId, courseId)` | `SubscriptionService` читає останню підписку студента на цей курс і отримує статус `closed` та `end_date` | внутрішній крок |
 | `Student` - `SubscriptionService` | `getSubmissionResults(courseId)` | `Student` просить свої результати за курсом; статус підписки не перевіряється, історія доступна за будь-якого статусу | І Олена бачить оцінку 85 і фідбек "Гарна робота" до ДЗ |
 | `SubscriptionService` - `Homework_submission` | `findGradedSubmissions(studentId, courseId)` | `SubscriptionService` читає здачі студента за курсом зі статусом `graded` і повертає `grade` і `feedback`; фільтра за датою немає | І Олена бачить оцінку 85 і фідбек "Гарна робота" до ДЗ |
 
