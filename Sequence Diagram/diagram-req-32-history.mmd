@@ -30,7 +30,7 @@ sequenceDiagram
 
     Student->>+SubscriptionService: openCourse(courseId)
     SubscriptionService->>+Subscription: findLatestSubscription(studentId, courseId)
-    Subscription-->>-SubscriptionService: підписка зі статусом "closed"
+Subscription-->>-SubscriptionService: підписка зі статусом "closed", end_date = 2026-10-01
     SubscriptionService-->>-Student: заняття і ДЗ, створені до end_date
 
     Student->>+SubscriptionService: getSubmissionResults(courseId)

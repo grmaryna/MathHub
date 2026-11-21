@@ -61,4 +61,7 @@ sequenceDiagram
 Усі activation bars парні (+ і -).
 Де діаграма відходить від таблиці в spec.md
 
-### Коментар:
+### Коментар та виправлення:
+- джерело endDate у filterContentUntil(endDate) не показане: [коміт]()
+
+
