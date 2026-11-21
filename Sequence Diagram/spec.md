@@ -108,7 +108,7 @@
 | `Student` - `SubscriptionService` | `getSubmissionResults(courseId)` | `Student` просить свої результати за курсом; статус підписки не перевіряється, історія доступна за будь-якого статусу | І Олена бачить оцінку 85 і фідбек "Гарна робота" до ДЗ |
 | `SubscriptionService` - `Homework_submission` | `findGradedSubmissions(studentId, courseId)` | `SubscriptionService` читає здачі студента за курсом зі статусом `graded` і повертає `grade` і `feedback`; фільтра за датою немає | І Олена бачить оцінку 85 і фідбек "Гарна робота" до ДЗ |
 
-## @REQ-34
+## @REQ-46
 
 ```feature
   Сценарій: Продовження в grace-період зберігає доступ
