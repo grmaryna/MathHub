@@ -19,6 +19,8 @@ sequenceDiagram
 
     SubscriptionService->>+Subscription: createSubscription(studentId, courseId, startDate, endDate, paymentMethod, price)
     Subscription-->>-SubscriptionService: нова підписка (start_date = 2026-10-02, статус "active")
+    SubscriptionService->>+Payment: createPayment(subscriptionId, externalPaymentId, amount, status)
+    Payment-->>-SubscriptionService: платіж збережено (статус "success")
     SubscriptionService-->>-PaymentGateway: оплату підтверджено
 
     Note over Scheduler,Subscription: Фаза 2: щоденна перевірка підписок
