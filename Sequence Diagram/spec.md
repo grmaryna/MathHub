@@ -53,7 +53,7 @@
 | `Student` - `SubscriptionService` | `submitHomework(homeworkId, file)` | `Student` здає ДЗ; `SubscriptionService` повертає «здачу прийнято» після перевірки статусу підписки | І Олена може здати ДЗ |
 | `SubscriptionService` - `Subscription` | `findLatestSubscription(studentId, courseId)` | `SubscriptionService` читає останню підписку студента на цей курс і отримує статус `grace`, тому здачу приймають | — (внутрішній крок: джерело статусу для прийняття здачі) |
 
-## @REQ-32
+## @REQ-32-closed
 
 ```feature
 Сценарій: Доступ закривається після 7 діб без продовження
@@ -82,7 +82,7 @@
 | `Student` - `SubscriptionService` | `submitHomework(homeworkId, file)` | `Student` здає ДЗ; `SubscriptionService` повертає помилку "доступ закрито" після перевірки статусу підписки | І Олена не може здати ДЗ попередніх занять |
 | `SubscriptionService` - `Subscription` | `findLatestSubscription(studentId, courseId)` | `SubscriptionService` читає останню підписку студента на цей курс і отримує статус `closed`, тому відхиляє здачу | внутрішній крок |
 
-## @REQ-33
+## @REQ-32-history
 
 ```feature
   Сценарій: Історія здач і оцінок зберігається після закриття доступу
